@@ -475,7 +475,7 @@ namespace SilkySouls3.ViewModels
                 return;
             }
 
-            _activateOnLaunchWindow = new ActivateOnLaunchWindow
+            _activateOnLaunchWindow = new ActivateOnLaunchWindow(_activateOnLaunchViewModel)
             {
                 DataContext = _activateOnLaunchViewModel,
                 Owner = Application.Current.MainWindow

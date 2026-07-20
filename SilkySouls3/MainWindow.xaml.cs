@@ -115,6 +115,9 @@ namespace SilkySouls3
             MainTabControl.Items.Add(new TabItem { Header = "Settings", Content = settingsTab });
 
             settingsViewModel.ApplyStartUpOptions();
+
+            _stateService.Publish(State.AppStart);
+
             Closing += MainWindow_Closing;
 
             _gameLoadedTimer = new DispatcherTimer

@@ -1,13 +1,15 @@
 using System.Windows;
 using System.Windows.Input;
+using SilkySouls3.ViewModels;
 
 namespace SilkySouls3.Views
 {
     public partial class ActivateOnLaunchWindow
     {
-        public ActivateOnLaunchWindow()
+        public ActivateOnLaunchWindow(ActivateOnLaunchViewModel viewModel)
         {
             InitializeComponent();
+            DataContext = viewModel;
         }
 
         private void TitleBar_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)

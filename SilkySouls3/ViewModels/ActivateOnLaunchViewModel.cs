@@ -26,6 +26,8 @@ namespace SilkySouls3.ViewModels
 
             RegisterActions();
 
+            stateService.Subscribe(State.AppStart, OnAppStart);
+            stateService.Subscribe(State.Attached, OnGameAttached);
             stateService.Subscribe(State.Loaded, OnGameLoaded);
             stateService.Subscribe(State.OnNewGameStart, OnNewGameStart);
         }
@@ -309,7 +311,7 @@ namespace SilkySouls3.ViewModels
             _isSpawnWeaponAtStartChecked = Get(nameof(IsSpawnWeaponAtStartChecked));
         }
 
-        private void OnGameLoaded()
+        private void OnAppStart()
         {
             if (!IsEnabled) return;
 
@@ -331,12 +333,22 @@ namespace SilkySouls3.ViewModels
             if (IsAutoNewGameSevenChecked) _playerViewModel.IsAutoSetNewGameSevenEnabled = true;
 
             if (IsTargetOptionsChecked) _targetViewModel.IsTargetOptionsEnabled = true;
+        }
+
+        private void OnGameAttached()
+        {
+            if (!IsEnabled) return;
 
             if (IsUnlockFpsChecked)
             {
                 _utilityViewModel.Fps = LaunchFps;
                 _utilityViewModel.IsDbgFpsEnabled = true;
             }
+        }
+
+        private void OnGameLoaded()
+        {
+            if (!IsEnabled) return;
 
             // Must be set here (State.Loaded) rather than on State.OnNewGameStart: ItemViewModel's own
             // OnNewGameStart handler reads AutoSpawnEnabled on that same event, and Loaded always fires
