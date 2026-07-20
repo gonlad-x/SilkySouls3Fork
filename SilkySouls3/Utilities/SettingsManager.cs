@@ -46,6 +46,9 @@ namespace SilkySouls3.Utilities
         public double SpEffectWindowTop { get; set; }
         public bool SpEffectAlwaysOnTop { get; set; }
 
+        public bool ActivateOnLaunchEnabled { get; set; }
+        public string ActivateOnLaunchActionIds { get; set; } = "";
+
         private static string SettingsPath => Path.Combine(
             Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),
             "SilkySouls3",

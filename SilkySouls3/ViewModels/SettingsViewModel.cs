@@ -3,9 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
 using H.Hooks;
+using SilkySouls3.Core;
 using SilkySouls3.Enums;
 using SilkySouls3.Interfaces;
 using SilkySouls3.Utilities;
+using SilkySouls3.Views;
 using Key = H.Hooks.Key;
 
 namespace SilkySouls3.ViewModels
@@ -14,6 +16,8 @@ namespace SilkySouls3.ViewModels
     {
         private readonly ISettingsService _settingsService;
         private readonly HotkeyManager _hotkeyManager;
+        private readonly ActivateOnLaunchViewModel _activateOnLaunchViewModel;
+        private ActivateOnLaunchWindow _activateOnLaunchWindow;
 
         private readonly Dictionary<string, HotkeyBindingViewModel> _hotkeyLookup;
 
@@ -130,11 +134,16 @@ namespace SilkySouls3.ViewModels
 
         #endregion
 
+        public System.Windows.Input.ICommand OpenActivateOnLaunchCommand { get; }
+
         public SettingsViewModel(ISettingsService settingsService, HotkeyManager hotkeyManager,
-            IStateService stateService)
+            IStateService stateService, ActivateOnLaunchViewModel activateOnLaunchViewModel)
         {
             _settingsService = settingsService;
             _hotkeyManager = hotkeyManager;
+            _activateOnLaunchViewModel = activateOnLaunchViewModel;
+
+            OpenActivateOnLaunchCommand = new DelegateCommand(OpenActivateOnLaunch);
 
             Hotkeys = new Dictionary<string, List<HotkeyBindingViewModel>>
             {
@@ -456,6 +465,23 @@ namespace SilkySouls3.ViewModels
             _isAttached = true;
             if (IsDefaultSoundChangeEnabled) _settingsService.PatchDefaultSound(DefaultSoundVolume);
             if (IsDisableMenuMusicEnabled) _settingsService.ToggleDisableMusic(true);
+        }
+
+        private void OpenActivateOnLaunch()
+        {
+            if (_activateOnLaunchWindow != null && _activateOnLaunchWindow.IsVisible)
+            {
+                _activateOnLaunchWindow.Activate();
+                return;
+            }
+
+            _activateOnLaunchWindow = new ActivateOnLaunchWindow(_activateOnLaunchViewModel)
+            {
+                DataContext = _activateOnLaunchViewModel,
+                Owner = Application.Current.MainWindow
+            };
+            _activateOnLaunchWindow.Closed += (_, _) => _activateOnLaunchWindow = null;
+            _activateOnLaunchWindow.ShowDialog();
         }
     }
 }

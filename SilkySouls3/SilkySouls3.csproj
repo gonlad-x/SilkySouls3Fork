@@ -200,6 +200,7 @@
     <Compile Include="Services\StateService.cs" />
     <Compile Include="Services\TravelService.cs" />
     <Compile Include="Services\UtilityService.cs" />
+    <Compile Include="Utilities\ActivateOnLaunchManager.cs" />
     <Compile Include="Utilities\AsmHelper.cs" />
     <Compile Include="Utilities\AsmLoader.cs" />
     <Compile Include="Utilities\DataLoader.cs" />
@@ -211,6 +212,7 @@
     <Compile Include="Utilities\UpDownHelper.cs" />
     <Compile Include="Utilities\User32.cs" />
     <Compile Include="Utilities\VersionChecker.cs" />
+    <Compile Include="ViewModels\ActivateOnLaunchViewModel.cs" />
     <Compile Include="ViewModels\BaseViewModel.cs" />
     <Compile Include="ViewModels\EnemyViewModel.cs" />
     <Compile Include="ViewModels\SpEffectViewModel.cs" />
@@ -222,6 +224,9 @@
     <Compile Include="ViewModels\SettingsViewModel.cs" />
     <Compile Include="ViewModels\TravelViewModel.cs" />
     <Compile Include="ViewModels\UtilityViewModel.cs" />
+    <Compile Include="Views\ActivateOnLaunchWindow.xaml.cs">
+      <DependentUpon>ActivateOnLaunchWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\CreateCustomWarpWindow.xaml.cs" />
     <Compile Include="Views\CreateLoadoutWindow.xaml.cs">
       <DependentUpon>CreateLoadoutWindow.xaml</DependentUpon>
@@ -275,6 +280,7 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="Views\ActivateOnLaunchWindow.xaml" />
     <Page Include="Views\CreateCustomWarpWindow.xaml" />
     <Page Include="Views\CreateLoadoutWindow.xaml" />
     <Page Include="Views\CustomMessageBox.xaml" />

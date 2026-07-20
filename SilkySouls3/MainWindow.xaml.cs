@@ -90,7 +90,11 @@ namespace SilkySouls3
                 paramService, debugDrawService, chrInsService, spEffectService, eventService, reminderService,
                 itemService);
             var itemViewModel = new ItemViewModel(itemService, _stateService);
-            var settingsViewModel = new SettingsViewModel(settingsService, hotkeyManager, _stateService);
+            var activateOnLaunchManager = new ActivateOnLaunchManager();
+            var activateOnLaunchViewModel = new ActivateOnLaunchViewModel(playerViewModel, targetViewModel,
+                utilityViewModel, travelViewModel, itemViewModel, activateOnLaunchManager, _stateService);
+            var settingsViewModel = new SettingsViewModel(settingsService, hotkeyManager, _stateService,
+                activateOnLaunchViewModel);
 
             var playerTab = new PlayerTab(playerViewModel);
             var utilityTab = new UtilityTab(utilityViewModel);
@@ -111,6 +115,9 @@ namespace SilkySouls3
             MainTabControl.Items.Add(new TabItem { Header = "Settings", Content = settingsTab });
 
             settingsViewModel.ApplyStartUpOptions();
+
+            _stateService.Publish(State.AppStart);
+
             Closing += MainWindow_Closing;
 
             _gameLoadedTimer = new DispatcherTimer

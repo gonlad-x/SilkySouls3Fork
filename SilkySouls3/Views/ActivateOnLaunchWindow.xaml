@@ -1,0 +1,191 @@
+<Window x:Class="SilkySouls3.Views.ActivateOnLaunchWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
+        mc:Ignorable="d"
+        Background="{StaticResource BackgroundBrush}"
+        Foreground="{StaticResource TextBrush}"
+        BorderBrush="{StaticResource BorderBrush}"
+        Title="Activate On Launch" Height="560" Width="380"
+        WindowStyle="None"
+        AllowsTransparency="True"
+        WindowStartupLocation="CenterOwner"
+        ResizeMode="NoResize">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="30" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <Border Grid.Row="0"
+                Background="{StaticResource TitleBarBrush}"
+                BorderBrush="{StaticResource BorderBrush}"
+                BorderThickness="0,0,0,1"
+                MouseLeftButtonDown="TitleBar_MouseLeftButtonDown">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+
+                <Image Source="/Assets/Silky.ico"
+                       Grid.Column="0"
+                       Width="16"
+                       Height="16"
+                       Margin="5,0,5,0"
+                       HorizontalAlignment="Center"
+                       VerticalAlignment="Center" />
+
+                <TextBlock Text="Activate On Launch"
+                           Grid.Column="1"
+                           HorizontalAlignment="Left"
+                           VerticalAlignment="Center"
+                           FontWeight="SemiBold"
+                           Foreground="{StaticResource TextBrush}" />
+
+                <Button Grid.Column="2"
+                        Content="✕"
+                        Width="46"
+                        Height="30"
+                        Click="CloseButton_Click">
+                    <Button.Style>
+                        <Style TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
+                            <Setter Property="Background" Value="Transparent" />
+                            <Setter Property="BorderThickness" Value="0" />
+                            <Style.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter Property="Background" Value="#E81123" />
+                                    <Setter Property="Foreground" Value="White" />
+                                </Trigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Button.Style>
+                </Button>
+            </Grid>
+        </Border>
+
+        <Grid Grid.Row="1" Margin="15">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+
+            <CheckBox Grid.Row="0"
+                      Content="Enable Activate On Launch"
+                      IsChecked="{Binding IsEnabled}"
+                      FontWeight="SemiBold"
+                      Margin="0,0,0,10" />
+
+            <Border Grid.Row="1"
+                    BorderThickness="1"
+                    BorderBrush="#333"
+                    CornerRadius="3">
+                <ScrollViewer VerticalScrollBarVisibility="Auto"
+                              HorizontalScrollBarVisibility="Disabled">
+                    <StackPanel Margin="10">
+
+                        <!-- Player -->
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="Player"
+                                       FontSize="13"
+                                       FontWeight="Bold"
+                                       Foreground="{StaticResource AccentBrush}"
+                                       Margin="0,0,0,6" />
+                            <Border Background="#3498db" CornerRadius="10" Width="12" Height="12" Margin="5,-3,0,0"
+                                    VerticalAlignment="Center"
+                                    ToolTip="Features in this section activate as soon as the tool loads into the game."
+                                    ToolTipService.InitialShowDelay="100">
+                                <TextBlock Text="i" Foreground="White" HorizontalAlignment="Center"
+                                           VerticalAlignment="Center" FontWeight="Bold" FontSize="10" />
+                            </Border>
+                        </StackPanel>
+                        <CheckBox Content="No Death" Margin="0,0,0,4" IsChecked="{Binding IsNoDeathChecked}" IsEnabled="{Binding IsEnabled}" />
+                        <CheckBox Content="No Damage" Margin="0,0,0,4" IsChecked="{Binding IsNoDamageChecked}" IsEnabled="{Binding IsEnabled}" />
+                        <CheckBox Content="Infinite Stamina" Margin="0,0,0,4" IsChecked="{Binding IsInfiniteStaminaChecked}" IsEnabled="{Binding IsEnabled}" />
+                        <CheckBox Content="No Goods Consume" Margin="0,0,0,4" IsChecked="{Binding IsNoGoodsConsumeChecked}" IsEnabled="{Binding IsEnabled}" />
+                        <CheckBox Content="Infinite FP" Margin="0,0,0,4" IsChecked="{Binding IsInfiniteFpChecked}" IsEnabled="{Binding IsEnabled}" />
+                        <CheckBox Content="Infinite Durability" Margin="0,0,0,4" IsChecked="{Binding IsInfiniteDurabilityChecked}" IsEnabled="{Binding IsEnabled}" />
+                        <CheckBox Content="One Shot" Margin="0,0,0,4" IsChecked="{Binding IsOneShotChecked}" IsEnabled="{Binding IsEnabled}" />
+                        <CheckBox Content="Invisible" Margin="0,0,0,4" IsChecked="{Binding IsInvisibleChecked}" IsEnabled="{Binding IsEnabled}" />
+                        <CheckBox Content="Silent" Margin="0,0,0,4" IsChecked="{Binding IsSilentChecked}" IsEnabled="{Binding IsEnabled}" />
+                        <CheckBox Content="No Ammo Consume" Margin="0,0,0,4" IsChecked="{Binding IsNoAmmoConsumeChecked}" IsEnabled="{Binding IsEnabled}" />
+                        <CheckBox Content="Infinite Poise" Margin="0,0,0,4" IsChecked="{Binding IsInfinitePoiseChecked}" IsEnabled="{Binding IsEnabled}" />
+                        <CheckBox Content="No Hit" Margin="0,0,0,4" IsChecked="{Binding IsNoHitChecked}" IsEnabled="{Binding IsEnabled}" />
+                        <CheckBox Content="Heal Over Time" Margin="0,0,0,4" IsChecked="{Binding IsHealOverTimeChecked}" IsEnabled="{Binding IsEnabled}" />
+                        <CheckBox Content="FP Regen" Margin="0,0,0,4" IsChecked="{Binding IsFpRegenChecked}" IsEnabled="{Binding IsEnabled}" />
+                        <CheckBox Content="Disable Roll" Margin="0,0,0,4" IsChecked="{Binding IsNoRollChecked}" IsEnabled="{Binding IsEnabled}" />
+                        <CheckBox Content="Auto NG+7" Margin="0,0,0,4" IsChecked="{Binding IsAutoNewGameSevenChecked}" IsEnabled="{Binding IsEnabled}" />
+
+                        <!-- Target -->
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="Target"
+                                       FontSize="13"
+                                       FontWeight="Bold"
+                                       Foreground="{StaticResource AccentBrush}"
+                                       Margin="0,14,0,6" />
+                            <Border Background="#3498db" CornerRadius="10" Width="12" Height="12" Margin="5,10,0,0"
+                                    VerticalAlignment="Center"
+                                    ToolTip="Features in this section activate as soon as the tool loads into the game."
+                                    ToolTipService.InitialShowDelay="100">
+                                <TextBlock Text="i" Foreground="White" HorizontalAlignment="Center"
+                                           VerticalAlignment="Center" FontWeight="Bold" FontSize="10" />
+                            </Border>
+                        </StackPanel>
+                        <CheckBox Content="Enable Target Options" Margin="0,0,0,4" IsChecked="{Binding IsTargetOptionsChecked}" IsEnabled="{Binding IsEnabled}" />
+
+                        <!-- Utility -->
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="Utility"
+                                       FontSize="13"
+                                       FontWeight="Bold"
+                                       Foreground="{StaticResource AccentBrush}"
+                                       Margin="0,14,0,6" />
+                            <Border Background="#3498db" CornerRadius="10" Width="12" Height="12" Margin="5,10,0,0"
+                                    VerticalAlignment="Center"
+                                    ToolTip="Features in this section activate as soon as the tool loads into the game."
+                                    ToolTipService.InitialShowDelay="100">
+                                <TextBlock Text="i" Foreground="White" HorizontalAlignment="Center"
+                                           VerticalAlignment="Center" FontWeight="Bold" FontSize="10" />
+                            </Border>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal" Margin="0,0,0,4">
+                            <CheckBox Content="Unlock FPS" IsChecked="{Binding IsUnlockFpsChecked}" IsEnabled="{Binding IsEnabled}" VerticalAlignment="Center" />
+                            <xctk:IntegerUpDown Margin="8,0,0,0"
+                                                 Width="90"
+                                                 Value="{Binding LaunchFps, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                                 Minimum="30"
+                                                 Maximum="360"
+                                                 Increment="10"
+                                                 TextAlignment="Center"
+                                                 IsEnabled="{Binding IsEnabled}"
+                                                 BorderBrush="#3F3F46" />
+                        </StackPanel>
+
+                        <!-- New Game Cycle -->
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="New Game Cycle"
+                                       FontSize="13"
+                                       FontWeight="Bold"
+                                       Foreground="{StaticResource AccentBrush}"
+                                       Margin="0,14,0,6" />
+                            <Border Background="#3498db" CornerRadius="10" Width="12" Height="12" Margin="5,10,0,0"
+                                    VerticalAlignment="Center"
+                                    ToolTip="Features in this section activate when a fresh new game is detected."
+                                    ToolTipService.InitialShowDelay="100">
+                                <TextBlock Text="i" Foreground="White" HorizontalAlignment="Center"
+                                           VerticalAlignment="Center" FontWeight="Bold" FontSize="10" />
+                            </Border>
+                        </StackPanel>
+                        <CheckBox Content="Unlock All Bonfire Warps" Margin="0,0,0,4" IsChecked="{Binding IsUnlockBonfiresChecked}" IsEnabled="{Binding IsEnabled}" />
+                        <CheckBox Content="Spawn Weapon At Start" Margin="0,0,0,4" IsChecked="{Binding IsSpawnWeaponAtStartChecked}" IsEnabled="{Binding IsEnabled}" />
+
+                    </StackPanel>
+                </ScrollViewer>
+            </Border>
+        </Grid>
+    </Grid>
+</Window>
