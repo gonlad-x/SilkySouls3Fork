@@ -331,8 +331,6 @@ namespace SilkySouls3.ViewModels
             if (IsFpRegenChecked) _playerViewModel.IsFpRegenEnabled = true;
             if (IsNoRollChecked) _playerViewModel.IsNoRollEnabled = true;
             if (IsAutoNewGameSevenChecked) _playerViewModel.IsAutoSetNewGameSevenEnabled = true;
-
-            if (IsTargetOptionsChecked) _targetViewModel.IsTargetOptionsEnabled = true;
         }
 
         private void OnGameAttached()
@@ -349,6 +347,8 @@ namespace SilkySouls3.ViewModels
         private void OnGameLoaded()
         {
             if (!IsEnabled) return;
+
+            if (IsTargetOptionsChecked) _targetViewModel.IsTargetOptionsEnabled = true;
 
             // Must be set here (State.Loaded) rather than on State.OnNewGameStart: ItemViewModel's own
             // OnNewGameStart handler reads AutoSpawnEnabled on that same event, and Loaded always fires
