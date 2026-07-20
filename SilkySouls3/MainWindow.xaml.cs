@@ -90,8 +90,9 @@ namespace SilkySouls3
                 paramService, debugDrawService, chrInsService, spEffectService, eventService, reminderService,
                 itemService);
             var itemViewModel = new ItemViewModel(itemService, _stateService);
+            var activateOnLaunchManager = new ActivateOnLaunchManager();
             var activateOnLaunchViewModel = new ActivateOnLaunchViewModel(playerViewModel, targetViewModel,
-                utilityViewModel, travelViewModel, itemViewModel, _stateService);
+                utilityViewModel, travelViewModel, itemViewModel, activateOnLaunchManager, _stateService);
             var settingsViewModel = new SettingsViewModel(settingsService, hotkeyManager, _stateService,
                 activateOnLaunchViewModel);
 

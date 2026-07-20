@@ -11,18 +11,20 @@ namespace SilkySouls3.ViewModels
         private readonly UtilityViewModel _utilityViewModel;
         private readonly TravelViewModel _travelViewModel;
         private readonly ItemViewModel _itemViewModel;
+        private readonly ActivateOnLaunchManager _aol;
 
         public ActivateOnLaunchViewModel(PlayerViewModel playerViewModel, TargetViewModel targetViewModel,
             UtilityViewModel utilityViewModel, TravelViewModel travelViewModel, ItemViewModel itemViewModel,
-            IStateService stateService)
+            ActivateOnLaunchManager activateOnLaunchManager, IStateService stateService)
         {
             _playerViewModel = playerViewModel;
             _targetViewModel = targetViewModel;
             _utilityViewModel = utilityViewModel;
             _travelViewModel = travelViewModel;
             _itemViewModel = itemViewModel;
+            _aol = activateOnLaunchManager;
 
-            LoadPrefs();
+            RegisterActions();
 
             stateService.Subscribe(State.Loaded, OnGameLoaded);
             stateService.Subscribe(State.OnNewGameStart, OnNewGameStart);
@@ -30,7 +32,8 @@ namespace SilkySouls3.ViewModels
 
         #region Properties
 
-        private bool _isEnabled;
+        // Master toggle
+        private bool _isEnabled = SettingsManager.Default.ActivateOnLaunchEnabled;
 
         public bool IsEnabled
         {
@@ -43,6 +46,10 @@ namespace SilkySouls3.ViewModels
             }
         }
 
+        // Helper macros
+        private bool Get(string id) => _aol.GetBool(id);
+        private void Set(string id, bool value) => _aol.SetBool(id, value);
+
         private bool _isNoDeathChecked;
 
         public bool IsNoDeathChecked
@@ -50,9 +57,7 @@ namespace SilkySouls3.ViewModels
             get => _isNoDeathChecked;
             set
             {
-                if (!SetProperty(ref _isNoDeathChecked, value)) return;
-                SettingsManager.Default.ActivateOnLaunchNoDeath = value;
-                SettingsManager.Default.Save();
+                if (SetProperty(ref _isNoDeathChecked, value)) Set(nameof(IsNoDeathChecked), value);
             }
         }
 
@@ -63,9 +68,7 @@ namespace SilkySouls3.ViewModels
             get => _isNoDamageChecked;
             set
             {
-                if (!SetProperty(ref _isNoDamageChecked, value)) return;
-                SettingsManager.Default.ActivateOnLaunchNoDamage = value;
-                SettingsManager.Default.Save();
+                if (SetProperty(ref _isNoDamageChecked, value)) Set(nameof(IsNoDamageChecked), value);
             }
         }
 
@@ -76,9 +79,7 @@ namespace SilkySouls3.ViewModels
             get => _isInfiniteStaminaChecked;
             set
             {
-                if (!SetProperty(ref _isInfiniteStaminaChecked, value)) return;
-                SettingsManager.Default.ActivateOnLaunchInfiniteStamina = value;
-                SettingsManager.Default.Save();
+                if (SetProperty(ref _isInfiniteStaminaChecked, value)) Set(nameof(IsInfiniteStaminaChecked), value);
             }
         }
 
@@ -89,9 +90,7 @@ namespace SilkySouls3.ViewModels
             get => _isNoGoodsConsumeChecked;
             set
             {
-                if (!SetProperty(ref _isNoGoodsConsumeChecked, value)) return;
-                SettingsManager.Default.ActivateOnLaunchNoGoodsConsume = value;
-                SettingsManager.Default.Save();
+                if (SetProperty(ref _isNoGoodsConsumeChecked, value)) Set(nameof(IsNoGoodsConsumeChecked), value);
             }
         }
 
@@ -102,9 +101,7 @@ namespace SilkySouls3.ViewModels
             get => _isInfiniteFpChecked;
             set
             {
-                if (!SetProperty(ref _isInfiniteFpChecked, value)) return;
-                SettingsManager.Default.ActivateOnLaunchInfiniteFp = value;
-                SettingsManager.Default.Save();
+                if (SetProperty(ref _isInfiniteFpChecked, value)) Set(nameof(IsInfiniteFpChecked), value);
             }
         }
 
@@ -115,9 +112,7 @@ namespace SilkySouls3.ViewModels
             get => _isInfiniteDurabilityChecked;
             set
             {
-                if (!SetProperty(ref _isInfiniteDurabilityChecked, value)) return;
-                SettingsManager.Default.ActivateOnLaunchInfiniteDurability = value;
-                SettingsManager.Default.Save();
+                if (SetProperty(ref _isInfiniteDurabilityChecked, value)) Set(nameof(IsInfiniteDurabilityChecked), value);
             }
         }
 
@@ -128,9 +123,7 @@ namespace SilkySouls3.ViewModels
             get => _isOneShotChecked;
             set
             {
-                if (!SetProperty(ref _isOneShotChecked, value)) return;
-                SettingsManager.Default.ActivateOnLaunchOneShot = value;
-                SettingsManager.Default.Save();
+                if (SetProperty(ref _isOneShotChecked, value)) Set(nameof(IsOneShotChecked), value);
             }
         }
 
@@ -141,9 +134,7 @@ namespace SilkySouls3.ViewModels
             get => _isInvisibleChecked;
             set
             {
-                if (!SetProperty(ref _isInvisibleChecked, value)) return;
-                SettingsManager.Default.ActivateOnLaunchInvisible = value;
-                SettingsManager.Default.Save();
+                if (SetProperty(ref _isInvisibleChecked, value)) Set(nameof(IsInvisibleChecked), value);
             }
         }
 
@@ -154,9 +145,7 @@ namespace SilkySouls3.ViewModels
             get => _isSilentChecked;
             set
             {
-                if (!SetProperty(ref _isSilentChecked, value)) return;
-                SettingsManager.Default.ActivateOnLaunchSilent = value;
-                SettingsManager.Default.Save();
+                if (SetProperty(ref _isSilentChecked, value)) Set(nameof(IsSilentChecked), value);
             }
         }
 
@@ -167,9 +156,7 @@ namespace SilkySouls3.ViewModels
             get => _isNoAmmoConsumeChecked;
             set
             {
-                if (!SetProperty(ref _isNoAmmoConsumeChecked, value)) return;
-                SettingsManager.Default.ActivateOnLaunchNoAmmoConsume = value;
-                SettingsManager.Default.Save();
+                if (SetProperty(ref _isNoAmmoConsumeChecked, value)) Set(nameof(IsNoAmmoConsumeChecked), value);
             }
         }
 
@@ -180,9 +167,7 @@ namespace SilkySouls3.ViewModels
             get => _isInfinitePoiseChecked;
             set
             {
-                if (!SetProperty(ref _isInfinitePoiseChecked, value)) return;
-                SettingsManager.Default.ActivateOnLaunchInfinitePoise = value;
-                SettingsManager.Default.Save();
+                if (SetProperty(ref _isInfinitePoiseChecked, value)) Set(nameof(IsInfinitePoiseChecked), value);
             }
         }
 
@@ -193,9 +178,7 @@ namespace SilkySouls3.ViewModels
             get => _isNoHitChecked;
             set
             {
-                if (!SetProperty(ref _isNoHitChecked, value)) return;
-                SettingsManager.Default.ActivateOnLaunchNoHit = value;
-                SettingsManager.Default.Save();
+                if (SetProperty(ref _isNoHitChecked, value)) Set(nameof(IsNoHitChecked), value);
             }
         }
 
@@ -206,9 +189,7 @@ namespace SilkySouls3.ViewModels
             get => _isHealOverTimeChecked;
             set
             {
-                if (!SetProperty(ref _isHealOverTimeChecked, value)) return;
-                SettingsManager.Default.ActivateOnLaunchHealOverTime = value;
-                SettingsManager.Default.Save();
+                if (SetProperty(ref _isHealOverTimeChecked, value)) Set(nameof(IsHealOverTimeChecked), value);
             }
         }
 
@@ -219,9 +200,7 @@ namespace SilkySouls3.ViewModels
             get => _isFpRegenChecked;
             set
             {
-                if (!SetProperty(ref _isFpRegenChecked, value)) return;
-                SettingsManager.Default.ActivateOnLaunchFpRegen = value;
-                SettingsManager.Default.Save();
+                if (SetProperty(ref _isFpRegenChecked, value)) Set(nameof(IsFpRegenChecked), value);
             }
         }
 
@@ -232,9 +211,7 @@ namespace SilkySouls3.ViewModels
             get => _isNoRollChecked;
             set
             {
-                if (!SetProperty(ref _isNoRollChecked, value)) return;
-                SettingsManager.Default.ActivateOnLaunchNoRoll = value;
-                SettingsManager.Default.Save();
+                if (SetProperty(ref _isNoRollChecked, value)) Set(nameof(IsNoRollChecked), value);
             }
         }
 
@@ -245,9 +222,7 @@ namespace SilkySouls3.ViewModels
             get => _isAutoNewGameSevenChecked;
             set
             {
-                if (!SetProperty(ref _isAutoNewGameSevenChecked, value)) return;
-                SettingsManager.Default.ActivateOnLaunchAutoNewGameSeven = value;
-                SettingsManager.Default.Save();
+                if (SetProperty(ref _isAutoNewGameSevenChecked, value)) Set(nameof(IsAutoNewGameSevenChecked), value);
             }
         }
 
@@ -258,9 +233,7 @@ namespace SilkySouls3.ViewModels
             get => _isTargetOptionsChecked;
             set
             {
-                if (!SetProperty(ref _isTargetOptionsChecked, value)) return;
-                SettingsManager.Default.ActivateOnLaunchTargetOptions = value;
-                SettingsManager.Default.Save();
+                if (SetProperty(ref _isTargetOptionsChecked, value)) Set(nameof(IsTargetOptionsChecked), value);
             }
         }
 
@@ -271,9 +244,7 @@ namespace SilkySouls3.ViewModels
             get => _isUnlockFpsChecked;
             set
             {
-                if (!SetProperty(ref _isUnlockFpsChecked, value)) return;
-                SettingsManager.Default.ActivateOnLaunchUnlockFps = value;
-                SettingsManager.Default.Save();
+                if (SetProperty(ref _isUnlockFpsChecked, value)) Set(nameof(IsUnlockFpsChecked), value);
             }
         }
 
@@ -284,9 +255,8 @@ namespace SilkySouls3.ViewModels
             get => _launchFps;
             set
             {
-                if (!SetProperty(ref _launchFps, value)) return;
-                SettingsManager.Default.ActivateOnLaunchFps = value;
-                SettingsManager.Default.Save();
+                if (SetProperty(ref _launchFps, value))
+                    _aol.SetInt(nameof(LaunchFps), value);
             }
         }
 
@@ -297,9 +267,7 @@ namespace SilkySouls3.ViewModels
             get => _isUnlockBonfiresChecked;
             set
             {
-                if (!SetProperty(ref _isUnlockBonfiresChecked, value)) return;
-                SettingsManager.Default.ActivateOnLaunchUnlockBonfires = value;
-                SettingsManager.Default.Save();
+                if (SetProperty(ref _isUnlockBonfiresChecked, value)) Set(nameof(IsUnlockBonfiresChecked), value);
             }
         }
 
@@ -310,38 +278,35 @@ namespace SilkySouls3.ViewModels
             get => _isSpawnWeaponAtStartChecked;
             set
             {
-                if (!SetProperty(ref _isSpawnWeaponAtStartChecked, value)) return;
-                SettingsManager.Default.ActivateOnLaunchSpawnWeaponAtStart = value;
-                SettingsManager.Default.Save();
+                if (SetProperty(ref _isSpawnWeaponAtStartChecked, value)) Set(nameof(IsSpawnWeaponAtStartChecked), value);
             }
         }
 
         #endregion
 
-        private void LoadPrefs()
+        private void RegisterActions()
         {
-            _isEnabled = SettingsManager.Default.ActivateOnLaunchEnabled;
-            _isNoDeathChecked = SettingsManager.Default.ActivateOnLaunchNoDeath;
-            _isNoDamageChecked = SettingsManager.Default.ActivateOnLaunchNoDamage;
-            _isInfiniteStaminaChecked = SettingsManager.Default.ActivateOnLaunchInfiniteStamina;
-            _isNoGoodsConsumeChecked = SettingsManager.Default.ActivateOnLaunchNoGoodsConsume;
-            _isInfiniteFpChecked = SettingsManager.Default.ActivateOnLaunchInfiniteFp;
-            _isInfiniteDurabilityChecked = SettingsManager.Default.ActivateOnLaunchInfiniteDurability;
-            _isOneShotChecked = SettingsManager.Default.ActivateOnLaunchOneShot;
-            _isInvisibleChecked = SettingsManager.Default.ActivateOnLaunchInvisible;
-            _isSilentChecked = SettingsManager.Default.ActivateOnLaunchSilent;
-            _isNoAmmoConsumeChecked = SettingsManager.Default.ActivateOnLaunchNoAmmoConsume;
-            _isInfinitePoiseChecked = SettingsManager.Default.ActivateOnLaunchInfinitePoise;
-            _isNoHitChecked = SettingsManager.Default.ActivateOnLaunchNoHit;
-            _isHealOverTimeChecked = SettingsManager.Default.ActivateOnLaunchHealOverTime;
-            _isFpRegenChecked = SettingsManager.Default.ActivateOnLaunchFpRegen;
-            _isNoRollChecked = SettingsManager.Default.ActivateOnLaunchNoRoll;
-            _isAutoNewGameSevenChecked = SettingsManager.Default.ActivateOnLaunchAutoNewGameSeven;
-            _isTargetOptionsChecked = SettingsManager.Default.ActivateOnLaunchTargetOptions;
-            _isUnlockFpsChecked = SettingsManager.Default.ActivateOnLaunchUnlockFps;
-            _launchFps = SettingsManager.Default.ActivateOnLaunchFps;
-            _isUnlockBonfiresChecked = SettingsManager.Default.ActivateOnLaunchUnlockBonfires;
-            _isSpawnWeaponAtStartChecked = SettingsManager.Default.ActivateOnLaunchSpawnWeaponAtStart;
+            _isNoDeathChecked = Get(nameof(IsNoDeathChecked));
+            _isNoDamageChecked = Get(nameof(IsNoDamageChecked));
+            _isInfiniteStaminaChecked = Get(nameof(IsInfiniteStaminaChecked));
+            _isNoGoodsConsumeChecked = Get(nameof(IsNoGoodsConsumeChecked));
+            _isInfiniteFpChecked = Get(nameof(IsInfiniteFpChecked));
+            _isInfiniteDurabilityChecked = Get(nameof(IsInfiniteDurabilityChecked));
+            _isOneShotChecked = Get(nameof(IsOneShotChecked));
+            _isInvisibleChecked = Get(nameof(IsInvisibleChecked));
+            _isSilentChecked = Get(nameof(IsSilentChecked));
+            _isNoAmmoConsumeChecked = Get(nameof(IsNoAmmoConsumeChecked));
+            _isInfinitePoiseChecked = Get(nameof(IsInfinitePoiseChecked));
+            _isNoHitChecked = Get(nameof(IsNoHitChecked));
+            _isHealOverTimeChecked = Get(nameof(IsHealOverTimeChecked));
+            _isFpRegenChecked = Get(nameof(IsFpRegenChecked));
+            _isNoRollChecked = Get(nameof(IsNoRollChecked));
+            _isAutoNewGameSevenChecked = Get(nameof(IsAutoNewGameSevenChecked));
+            _isTargetOptionsChecked = Get(nameof(IsTargetOptionsChecked));
+            _isUnlockFpsChecked = Get(nameof(IsUnlockFpsChecked));
+            _launchFps = _aol.GetInt(nameof(LaunchFps), defaultValue: 75);
+            _isUnlockBonfiresChecked = Get(nameof(IsUnlockBonfiresChecked));
+            _isSpawnWeaponAtStartChecked = Get(nameof(IsSpawnWeaponAtStartChecked));
         }
 
         private void OnGameLoaded()

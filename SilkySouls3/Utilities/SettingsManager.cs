@@ -47,27 +47,7 @@ namespace SilkySouls3.Utilities
         public bool SpEffectAlwaysOnTop { get; set; }
 
         public bool ActivateOnLaunchEnabled { get; set; }
-        public bool ActivateOnLaunchNoDeath { get; set; }
-        public bool ActivateOnLaunchNoDamage { get; set; }
-        public bool ActivateOnLaunchInfiniteStamina { get; set; }
-        public bool ActivateOnLaunchNoGoodsConsume { get; set; }
-        public bool ActivateOnLaunchInfiniteFp { get; set; }
-        public bool ActivateOnLaunchInfiniteDurability { get; set; }
-        public bool ActivateOnLaunchOneShot { get; set; }
-        public bool ActivateOnLaunchInvisible { get; set; }
-        public bool ActivateOnLaunchSilent { get; set; }
-        public bool ActivateOnLaunchNoAmmoConsume { get; set; }
-        public bool ActivateOnLaunchInfinitePoise { get; set; }
-        public bool ActivateOnLaunchNoHit { get; set; }
-        public bool ActivateOnLaunchHealOverTime { get; set; }
-        public bool ActivateOnLaunchFpRegen { get; set; }
-        public bool ActivateOnLaunchNoRoll { get; set; }
-        public bool ActivateOnLaunchAutoNewGameSeven { get; set; }
-        public bool ActivateOnLaunchTargetOptions { get; set; }
-        public bool ActivateOnLaunchUnlockFps { get; set; }
-        [DefaultValue(75)] public int ActivateOnLaunchFps { get; set; }
-        public bool ActivateOnLaunchUnlockBonfires { get; set; }
-        public bool ActivateOnLaunchSpawnWeaponAtStart { get; set; }
+        public string ActivateOnLaunchActionIds { get; set; } = "";
 
         private static string SettingsPath => Path.Combine(
             Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),
