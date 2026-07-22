@@ -1,0 +1,100 @@
+<UserControl x:Class="SilkySouls3.Views.DebugTab"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             mc:Ignorable="d"
+             d:DesignHeight="450" d:DesignWidth="500">
+
+    <StackPanel Margin="10">
+        <TextBlock Text="Boss Revive Data Mining" FontWeight="Bold" Margin="0,0,0,10" />
+
+        <Border BorderThickness="1" BorderBrush="#333" CornerRadius="3" Padding="10" Margin="0,0,0,10">
+            <StackPanel>
+                <TextBlock Text="Current Block ID" FontWeight="SemiBold" Margin="0,0,0,5" />
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Text="Block ID:" VerticalAlignment="Center" Margin="0,0,10,0" />
+                    <TextBlock Text="{Binding CurrentBlockId}" VerticalAlignment="Center" FontWeight="Bold" />
+                </StackPanel>
+            </StackPanel>
+        </Border>
+
+        <Border BorderThickness="1" BorderBrush="#333" CornerRadius="3" Padding="10">
+            <StackPanel>
+                <TextBlock Text="Event Flag Checker" FontWeight="SemiBold" Margin="0,0,0,5" />
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Text="Event ID:" VerticalAlignment="Center" Margin="0,0,10,0" />
+                    <TextBox Width="100" Text="{Binding EventFlagId}" Margin="0,0,10,0" />
+
+                    <Button Content="Check Event"
+                            Padding="10,3"
+                            Margin="0,0,10,0"
+                            Command="{Binding CheckEventCommand}" />
+
+                    <TextBlock Text="State:" VerticalAlignment="Center" Margin="0,0,5,0" />
+                    <TextBlock Text="{Binding EventFlagStatusText}"
+                               Foreground="{Binding EventFlagStatusColor}"
+                               VerticalAlignment="Center" FontWeight="Bold" />
+                </StackPanel>
+
+                <CheckBox Content="Draw Events"
+                          IsChecked="{Binding IsDrawEventsEnabled}"
+                          Margin="0,10,0,0"
+                          ToolTip="Enables the game's own in-game debug overlay showing live event/flag activity as it happens - useful for reading off the exact flag IDs a boss fight touches."
+                          ToolTipService.InitialShowDelay="100" />
+            </StackPanel>
+        </Border>
+
+        <Border BorderThickness="1" BorderBrush="#333" CornerRadius="3" Padding="10" Margin="0,10,0,0">
+            <StackPanel>
+                <TextBlock Text="Export Boss Data" FontWeight="SemiBold" Margin="0,0,0,5" />
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Text="Boss Name:" VerticalAlignment="Center" Margin="0,0,10,0" />
+                    <TextBox Width="180" Text="{Binding BossName}" Margin="0,0,10,0" />
+
+                    <Button Content="Export Current Event + Block ID"
+                            Padding="10,3"
+                            Command="{Binding ExportCommand}" />
+                </StackPanel>
+                <TextBlock Text="{Binding ExportStatusText}"
+                           Margin="0,5,0,0"
+                           TextWrapping="Wrap"
+                           Foreground="Gray" />
+            </StackPanel>
+        </Border>
+
+        <Border BorderThickness="1" BorderBrush="#333" CornerRadius="3" Padding="10" Margin="0,10,0,0">
+            <StackPanel>
+                <TextBlock Text="Flag Diff Scanner" FontWeight="SemiBold" Margin="0,0,0,5" />
+                <TextBlock TextWrapping="Wrap" Foreground="Gray" Margin="0,0,0,8"
+                           Text="Snapshots every event flag in the range below, then diffs against a second snapshot to find which ones flipped - e.g. take a Before snapshot, kill the boss, then take an After snapshot. Changed flags are shown below and auto-saved to boss_revive_flag_diff.csv. Uses the Boss Name field above." />
+
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Text="From:" VerticalAlignment="Center" Margin="0,0,5,0" />
+                    <TextBox Width="100" Text="{Binding FlagRangeFrom}" Margin="0,0,10,0" />
+                    <TextBlock Text="To:" VerticalAlignment="Center" Margin="0,0,5,0" />
+                    <TextBox Width="100" Text="{Binding FlagRangeTo}" Margin="0,0,10,0" />
+                </StackPanel>
+
+                <StackPanel Orientation="Horizontal" Margin="0,8,0,0">
+                    <Button Content="Snapshot Before"
+                            Padding="10,3"
+                            Margin="0,0,10,0"
+                            Command="{Binding SnapshotBeforeCommand}" />
+                    <Button Content="Snapshot After &amp; Save Diff"
+                            Padding="10,3"
+                            Command="{Binding SnapshotAfterCommand}" />
+                </StackPanel>
+
+                <TextBlock Text="{Binding FlagScanStatusText}"
+                           Margin="0,8,0,0"
+                           TextWrapping="Wrap"
+                           Foreground="Gray" />
+
+                <ListBox ItemsSource="{Binding FlagDiffResults}"
+                         Margin="0,5,0,0"
+                         MaxHeight="150" />
+            </StackPanel>
+        </Border>
+    </StackPanel>
+</UserControl>

@@ -110,6 +110,83 @@ namespace SilkySouls3.Utilities
             return warpDict;
         }
 
+        public static Dictionary<string, List<BossRevive>> GetBossRevives()
+        {
+            Dictionary<string, List<BossRevive>> bossRevives = new Dictionary<string, List<BossRevive>>();
+            string csvData = Resources.BossRevives;
+            if (string.IsNullOrWhiteSpace(csvData)) return bossRevives;
+
+            using StringReader reader = new StringReader(csvData);
+            string line;
+            while ((line = reader.ReadLine()) != null)
+            {
+                if (string.IsNullOrWhiteSpace(line) || line.StartsWith("#")) continue;
+
+                string[] parts = line.Split(',');
+                if (parts.Length < 9) continue;
+
+                DlcRequirement dlcRequirement = ParseDlcRequirement(parts[0]);
+                string area = parts[1];
+
+                BossRevive boss = new BossRevive
+                {
+                    DlcRequirement = dlcRequirement,
+                    Area = area,
+                    BossName = parts[2],
+                    BlockId = int.Parse(parts[3], CultureInfo.InvariantCulture),
+                    FirstEncounterFlags = ParseBossFlags(parts[4]),
+                    BossFlags = ParseBossFlags(parts[5]),
+                    BonfireId = int.Parse(parts[6], CultureInfo.InvariantCulture),
+                    Coords = ParseBossCoords(parts[7]),
+                    Angle = string.IsNullOrWhiteSpace(parts[8])
+                        ? 0f
+                        : float.Parse(parts[8], CultureInfo.InvariantCulture)
+                };
+
+                if (!bossRevives.ContainsKey(area))
+                {
+                    bossRevives[area] = new List<BossRevive>();
+                }
+
+                bossRevives[area].Add(boss);
+            }
+
+            return bossRevives;
+        }
+
+        // Each entry is "eventId" (implies clear to OFF) or "eventId:1" (set ON) / "eventId:0" (set OFF, explicit)
+        private static List<BossFlag> ParseBossFlags(string flagData)
+        {
+            var flags = new List<BossFlag>();
+            if (string.IsNullOrWhiteSpace(flagData)) return flags;
+
+            foreach (var part in flagData.Split('|'))
+            {
+                if (string.IsNullOrWhiteSpace(part)) continue;
+
+                var pieces = part.Split(':');
+                if (int.TryParse(pieces[0], NumberStyles.Integer, CultureInfo.InvariantCulture, out int id))
+                {
+                    bool value = pieces.Length > 1 && pieces[1] == "1";
+                    flags.Add(new BossFlag { EventId = id, Value = value });
+                }
+            }
+
+            return flags;
+        }
+
+        private static Vector3? ParseBossCoords(string coordData)
+        {
+            if (string.IsNullOrWhiteSpace(coordData)) return null;
+
+            string[] parts = coordData.Split('|');
+            return new Vector3(
+                float.Parse(parts[0], CultureInfo.InvariantCulture),
+                float.Parse(parts[1], CultureInfo.InvariantCulture),
+                float.Parse(parts[2], CultureInfo.InvariantCulture)
+            );
+        }
+
         public static List<Item> GetItemList(string listName)
         {
             List<Item> items = new List<Item>();

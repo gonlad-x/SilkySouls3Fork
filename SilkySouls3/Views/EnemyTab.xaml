@@ -9,6 +9,8 @@
     <UserControl.Resources>
         <BooleanToVisibilityConverter x:Key="BoolToVis" />
     </UserControl.Resources>
+    <TabControl Margin="5">
+        <TabItem Header="General">
     <StackPanel Margin="10">
 
         <Border BorderThickness="1" BorderBrush="#333" CornerRadius="3" Margin="0,0,0,5">
@@ -212,4 +214,9 @@
         </Grid>
 
     </StackPanel>
+        </TabItem>
+        <TabItem Header="Boss Revives">
+            <ContentControl x:Name="BossRevivesHost" />
+        </TabItem>
+    </TabControl>
 </UserControl>

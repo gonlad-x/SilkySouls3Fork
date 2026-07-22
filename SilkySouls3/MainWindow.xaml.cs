@@ -90,20 +90,25 @@ namespace SilkySouls3
                 paramService, debugDrawService, chrInsService, spEffectService, eventService, reminderService,
                 itemService);
             var itemViewModel = new ItemViewModel(itemService, _stateService);
+            var bossRevivesViewModel = new BossRevivesViewModel(eventService, travelService, playerService,
+                _dlcService, _stateService);
             var activateOnLaunchManager = new ActivateOnLaunchManager();
             var activateOnLaunchViewModel = new ActivateOnLaunchViewModel(playerViewModel, targetViewModel,
                 utilityViewModel, travelViewModel, itemViewModel, activateOnLaunchManager, _stateService);
             var settingsViewModel = new SettingsViewModel(settingsService, hotkeyManager, _stateService,
                 activateOnLaunchViewModel);
+            var debugViewModel = new DebugViewModel(playerService, eventService, gameTickService, _stateService);
 
             var playerTab = new PlayerTab(playerViewModel);
             var utilityTab = new UtilityTab(utilityViewModel);
             var eventTab = new EventTab(eventViewModel);
             var travelTab = new TravelTab(travelViewModel);
             var targetTab = new TargetTab(targetViewModel);
-            var enemyTab = new EnemyTab(enemyViewModel);
+            var bossRevivesTab = new BossRevivesTab(bossRevivesViewModel);
+            var enemyTab = new EnemyTab(enemyViewModel, bossRevivesTab);
             var itemTab = new ItemTab(itemViewModel);
             var settingsTab = new SettingsTab(settingsViewModel);
+            var debugTab = new DebugTab(debugViewModel);
 
             MainTabControl.Items.Add(new TabItem { Header = "Player", Content = playerTab });
             MainTabControl.Items.Add(new TabItem { Header = "Travel", Content = travelTab });
@@ -113,6 +118,7 @@ namespace SilkySouls3
             MainTabControl.Items.Add(new TabItem { Header = "Event", Content = eventTab });
             MainTabControl.Items.Add(new TabItem { Header = "Items", Content = itemTab });
             MainTabControl.Items.Add(new TabItem { Header = "Settings", Content = settingsTab });
+            MainTabControl.Items.Add(new TabItem { Header = "Debug", Content = debugTab });
 
             settingsViewModel.ApplyStartUpOptions();
 

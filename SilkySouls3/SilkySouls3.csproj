@@ -175,6 +175,8 @@
     <Compile Include="Models\Item.cs" />
     <Compile Include="Models\ItemDrop.cs" />
     <Compile Include="Models\Loadout.cs" />
+    <Compile Include="Models\BossFlag.cs" />
+    <Compile Include="Models\BossRevive.cs" />
     <Compile Include="Models\Poise.cs" />
     <Compile Include="Models\Position.cs" />
     <Compile Include="Models\Resistances.cs" />
@@ -214,6 +216,8 @@
     <Compile Include="Utilities\VersionChecker.cs" />
     <Compile Include="ViewModels\ActivateOnLaunchViewModel.cs" />
     <Compile Include="ViewModels\BaseViewModel.cs" />
+    <Compile Include="ViewModels\BossRevivesViewModel.cs" />
+    <Compile Include="ViewModels\DebugViewModel.cs" />
     <Compile Include="ViewModels\EnemyViewModel.cs" />
     <Compile Include="ViewModels\SpEffectViewModel.cs" />
     <Compile Include="ViewModels\TargetViewModel.cs" />
@@ -243,6 +247,12 @@
     </Compile>
     <Compile Include="Views\EventTab.xaml.cs">
       <DependentUpon>EventTab.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\BossRevivesTab.xaml.cs">
+      <DependentUpon>BossRevivesTab.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\DebugTab.xaml.cs">
+      <DependentUpon>DebugTab.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\InputBox.xaml.cs">
       <DependentUpon>InputBox.xaml</DependentUpon>
@@ -283,6 +293,8 @@
     <Page Include="Views\ActivateOnLaunchWindow.xaml" />
     <Page Include="Views\CreateCustomWarpWindow.xaml" />
     <Page Include="Views\CreateLoadoutWindow.xaml" />
+    <Page Include="Views\DebugTab.xaml" />
+    <Page Include="Views\BossRevivesTab.xaml" />
     <Page Include="Views\CustomMessageBox.xaml" />
     <Page Include="Views\DefensesWindow.xaml" />
     <Page Include="Views\EnemyTab.xaml" />
