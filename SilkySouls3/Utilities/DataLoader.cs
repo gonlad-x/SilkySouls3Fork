@@ -140,7 +140,11 @@ namespace SilkySouls3.Utilities
                     Coords = ParseBossCoords(parts[7]),
                     Angle = string.IsNullOrWhiteSpace(parts[8])
                         ? 0f
-                        : float.Parse(parts[8], CultureInfo.InvariantCulture)
+                        : float.Parse(parts[8], CultureInfo.InvariantCulture),
+                    FirstEncounterItemId = parts.Length > 9 && int.TryParse(parts[9], NumberStyles.Integer,
+                        CultureInfo.InvariantCulture, out int firstEncounterItemId)
+                        ? firstEncounterItemId
+                        : null
                 };
 
                 if (!bossRevives.ContainsKey(area))

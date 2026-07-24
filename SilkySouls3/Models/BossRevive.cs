@@ -15,5 +15,6 @@ namespace SilkySouls3.Models
         public int BonfireId { get; set; }
         public Vector3? Coords { get; set; }
         public float Angle { get; set; }
+        public int? FirstEncounterItemId { get; set; }
     }
 }

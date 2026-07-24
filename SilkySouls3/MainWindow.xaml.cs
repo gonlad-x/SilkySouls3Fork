@@ -91,7 +91,7 @@ namespace SilkySouls3
                 itemService);
             var itemViewModel = new ItemViewModel(itemService, _stateService);
             var bossRevivesViewModel = new BossRevivesViewModel(eventService, travelService, playerService,
-                _dlcService, _stateService);
+                _dlcService, _stateService, itemService);
             var activateOnLaunchManager = new ActivateOnLaunchManager();
             var activateOnLaunchViewModel = new ActivateOnLaunchViewModel(playerViewModel, targetViewModel,
                 utilityViewModel, travelViewModel, itemViewModel, activateOnLaunchManager, _stateService);

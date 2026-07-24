@@ -1,6 +1,8 @@
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using System.Windows.Media;
@@ -18,6 +20,8 @@ namespace SilkySouls3.ViewModels
         private readonly ITravelService _travelService;
         private readonly IPlayerService _playerService;
         private readonly IDlcService _dlcService;
+        private readonly IItemService _itemService;
+        private readonly IStateService _stateService;
 
         private const string BossStatusDead = "Dead";
         private const string BossStatusAlive = "Alive";
@@ -37,12 +41,15 @@ namespace SilkySouls3.ViewModels
         private string _preSearchArea;
 
         public BossRevivesViewModel(IEventService eventService, ITravelService travelService,
-            IPlayerService playerService, IDlcService dlcService, IStateService stateService)
+            IPlayerService playerService, IDlcService dlcService, IStateService stateService,
+            IItemService itemService)
         {
             _eventService = eventService;
             _travelService = travelService;
             _playerService = playerService;
             _dlcService = dlcService;
+            _itemService = itemService;
+            _stateService = stateService;
 
             ReviveBossCommand = new DelegateCommand(ReviveBoss);
             ReviveBossFirstEncounterCommand = new DelegateCommand(ReviveBossFirstEncounter);
@@ -281,16 +288,34 @@ namespace SilkySouls3.ViewModels
             SetBossFlags(bossRevive, isFirstEncounter);
             RefreshSelectedBossStatus();
 
-            if (_playerService.GetCurrentBlockId() != bossRevive.BlockId) return;
+            if (isFirstEncounter && bossRevive.FirstEncounterItemId.HasValue)
+                _itemService.SpawnItem(bossRevive.FirstEncounterItemId.Value, 1, false, 1);
+
+            bool isInBossArea = _playerService.GetCurrentBlockId() == bossRevive.BlockId;
+            if (!isInBossArea && !IsRestOnReviveEnabled) return;
 
             _ = Task.Run(() =>
             {
-                if (bossRevive.Coords.HasValue)
-                    _travelService.WarpWithCoords(bossRevive.Coords.Value, bossRevive.Angle, bossRevive.BonfireId);
-                else
-                    _travelService.Warp(bossRevive.BonfireId);
+                if (isInBossArea)
+                {
+                    if (bossRevive.Coords.HasValue)
+                        _travelService.WarpWithCoords(bossRevive.Coords.Value, bossRevive.Angle,
+                            bossRevive.BonfireId);
+                    else
+                        _travelService.Warp(bossRevive.BonfireId);
+                }
 
-                if (IsRestOnReviveEnabled) _playerService.Rest();
+                if (IsRestOnReviveEnabled)
+                {
+                    if (isInBossArea)
+                    {
+                        int start = Environment.TickCount;
+                        while (!_stateService.IsFadedIn() && Environment.TickCount - start < 10000)
+                            Thread.Sleep(50);
+                    }
+
+                    _playerService.Rest();
+                }
             });
         }
 
