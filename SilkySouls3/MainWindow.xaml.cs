@@ -88,10 +88,8 @@ namespace SilkySouls3
                 gameTickService, spEffectService);
             var enemyViewModel = new EnemyViewModel(enemyService, cinderService, hotkeyManager, _stateService,
                 paramService, debugDrawService, chrInsService, spEffectService, eventService, reminderService,
-                itemService);
+                itemService, travelService, playerService, _dlcService);
             var itemViewModel = new ItemViewModel(itemService, _stateService);
-            var bossRevivesViewModel = new BossRevivesViewModel(eventService, travelService, playerService,
-                _dlcService, _stateService, itemService);
             var activateOnLaunchManager = new ActivateOnLaunchManager();
             var activateOnLaunchViewModel = new ActivateOnLaunchViewModel(playerViewModel, targetViewModel,
                 utilityViewModel, travelViewModel, itemViewModel, activateOnLaunchManager, _stateService);
@@ -103,8 +101,7 @@ namespace SilkySouls3
             var eventTab = new EventTab(eventViewModel);
             var travelTab = new TravelTab(travelViewModel);
             var targetTab = new TargetTab(targetViewModel);
-            var bossRevivesTab = new BossRevivesTab(bossRevivesViewModel);
-            var enemyTab = new EnemyTab(enemyViewModel, bossRevivesTab);
+            var enemyTab = new EnemyTab(enemyViewModel);
             var itemTab = new ItemTab(itemViewModel);
             var settingsTab = new SettingsTab(settingsViewModel);
 

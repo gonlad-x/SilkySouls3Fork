@@ -4,11 +4,10 @@ namespace SilkySouls3.Views
 {
     public partial class EnemyTab
     {
-        public EnemyTab(EnemyViewModel enemyViewModel, BossRevivesTab bossRevivesTab)
+        public EnemyTab(EnemyViewModel enemyViewModel)
         {
             InitializeComponent();
             DataContext = enemyViewModel;
-            BossRevivesHost.Content = bossRevivesTab;
         }
     }
 }

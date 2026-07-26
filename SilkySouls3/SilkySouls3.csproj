@@ -216,7 +216,6 @@
     <Compile Include="Utilities\VersionChecker.cs" />
     <Compile Include="ViewModels\ActivateOnLaunchViewModel.cs" />
     <Compile Include="ViewModels\BaseViewModel.cs" />
-    <Compile Include="ViewModels\BossRevivesViewModel.cs" />
     <Compile Include="ViewModels\EnemyViewModel.cs" />
     <Compile Include="ViewModels\SpEffectViewModel.cs" />
     <Compile Include="ViewModels\TargetViewModel.cs" />
@@ -246,9 +245,6 @@
     </Compile>
     <Compile Include="Views\EventTab.xaml.cs">
       <DependentUpon>EventTab.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\BossRevivesTab.xaml.cs">
-      <DependentUpon>BossRevivesTab.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\InputBox.xaml.cs">
       <DependentUpon>InputBox.xaml</DependentUpon>
@@ -289,7 +285,6 @@
     <Page Include="Views\ActivateOnLaunchWindow.xaml" />
     <Page Include="Views\CreateCustomWarpWindow.xaml" />
     <Page Include="Views\CreateLoadoutWindow.xaml" />
-    <Page Include="Views\BossRevivesTab.xaml" />
     <Page Include="Views\CustomMessageBox.xaml" />
     <Page Include="Views\DefensesWindow.xaml" />
     <Page Include="Views\EnemyTab.xaml" />
