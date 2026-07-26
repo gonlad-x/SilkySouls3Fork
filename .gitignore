@@ -3,3 +3,30 @@ obj/
 /packages/
 riderModule.iml
 /_ReSharper.Caches/
+/.vs/
+/boss-revive.md
+/event/
+/vanilla_evs/
+/event_example_gundyr.webp
+/Bloodborne - Boss related events&flags - Bosses.csv
+/Copy of Elden Ring Boss Revive Flags Documentation_Annotated.csv
+/DS3 Boss Revive Flags Documentation - Formatting for SS3.csv
+/DS3 boss event flags - event flags.csv
+/DS3 boss event flags - exhaustive ds3 event flags (modding wiki).csv
+/DS3 boss revive flags - master reference.csv
+/Elden Ring Boss Revive Flags Documentation - Formatting for Tarnished Tool.csv
+/boss-entity-ids.csv
+/boss-entity-map-blockid.csv
+/boss-event-flags-v2.csv
+/boss-model-ids.csv
+/boss_event_flags_discord_logs.txt
+/cinders.csv
+/data-mining-resources.md
+/ds3-flag-family-analysis.csv
+/elden-ring-flag-family-analysis.csv
+/exhaustive_boss_event_analysis.csv
+/exhaustive_boss_event_analysis.md
+/tarnishedtool-vs-ss3-revive-comparison.md
+/tga.csv
+/three-way-boss-flag-pattern-comparison.csv
+/unsure_flags.csv
