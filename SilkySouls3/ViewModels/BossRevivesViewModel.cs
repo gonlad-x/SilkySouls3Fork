@@ -289,7 +289,7 @@ namespace SilkySouls3.ViewModels
             RefreshSelectedBossStatus();
 
             if (isFirstEncounter && bossRevive.FirstEncounterItemId.HasValue)
-                _itemService.SpawnItem(bossRevive.FirstEncounterItemId.Value, 1, false, 1);
+                _itemService.SpawnItem(bossRevive.FirstEncounterItemId.Value, 1, true, 1);
 
             bool isInBossArea = _playerService.GetCurrentBlockId() == bossRevive.BlockId;
             if (!isInBossArea && !IsRestOnReviveEnabled) return;
