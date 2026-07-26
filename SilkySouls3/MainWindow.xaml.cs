@@ -88,7 +88,7 @@ namespace SilkySouls3
                 gameTickService, spEffectService);
             var enemyViewModel = new EnemyViewModel(enemyService, cinderService, hotkeyManager, _stateService,
                 paramService, debugDrawService, chrInsService, spEffectService, eventService, reminderService,
-                itemService);
+                itemService, travelService, playerService, _dlcService);
             var itemViewModel = new ItemViewModel(itemService, _stateService);
             var activateOnLaunchManager = new ActivateOnLaunchManager();
             var activateOnLaunchViewModel = new ActivateOnLaunchViewModel(playerViewModel, targetViewModel,

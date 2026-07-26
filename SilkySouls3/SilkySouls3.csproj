@@ -175,6 +175,8 @@
     <Compile Include="Models\Item.cs" />
     <Compile Include="Models\ItemDrop.cs" />
     <Compile Include="Models\Loadout.cs" />
+    <Compile Include="Models\BossFlag.cs" />
+    <Compile Include="Models\BossRevive.cs" />
     <Compile Include="Models\Poise.cs" />
     <Compile Include="Models\Position.cs" />
     <Compile Include="Models\Resistances.cs" />

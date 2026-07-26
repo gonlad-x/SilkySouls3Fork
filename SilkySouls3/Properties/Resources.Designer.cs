@@ -905,6 +905,15 @@ namespace SilkySouls3.Properties {
                 return ResourceManager.GetString("WarpEntries", resourceCulture);
             }
         }
+
+        /// <summary>
+        ///   Looks up a localized string similar to the Boss Revives dataset (Area,BossName,BlockId,FirstEncounterFlags,BossFlags,BonfireId,Coords,Angle per row).
+        /// </summary>
+        internal static string BossRevives {
+            get {
+                return ResourceManager.GetString("BossRevives", resourceCulture);
+            }
+        }
         
         /// <summary>
         ///   Looks up a localized string similar to 0,013599D0,Ancient Dragon Greatshield,1,1,2,0
