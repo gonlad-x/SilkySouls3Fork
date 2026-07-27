@@ -161,7 +161,7 @@ namespace SilkySouls3.ViewModels
 
         #region Properties
 
-        private bool _areOptionsEnabled = true;
+        private bool _areOptionsEnabled;
 
         public bool AreOptionsEnabled
         {
