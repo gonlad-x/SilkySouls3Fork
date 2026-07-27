@@ -28,7 +28,7 @@ namespace SilkySouls3.ViewModels
         private bool _isLoaded;
         private bool _isAttached;
 
-        public Dictionary<string, List<HotkeyBindingViewModel>> Hotkeys { get; }
+        public SearchableGroupedCollection<string, HotkeyBindingViewModel> Hotkeys { get; }
 
         #region Properties
 
@@ -145,7 +145,7 @@ namespace SilkySouls3.ViewModels
 
             OpenActivateOnLaunchCommand = new DelegateCommand(OpenActivateOnLaunch);
 
-            Hotkeys = new Dictionary<string, List<HotkeyBindingViewModel>>
+            var groupedHotkeys = new Dictionary<string, List<HotkeyBindingViewModel>>
             {
                 ["Player"] =
                 [
@@ -245,10 +245,13 @@ namespace SilkySouls3.ViewModels
                 ],
             };
 
-            _hotkeyLookup = Hotkeys.Values
-                .SelectMany(x => x)
-                .ToDictionary(h => h.ActionId);
-            
+            Hotkeys = new SearchableGroupedCollection<string, HotkeyBindingViewModel>(
+                groupedHotkeys,
+                (hotkey, search) => hotkey.DisplayName.ToLower().Contains(search)
+            );
+
+            _hotkeyLookup = Hotkeys.AllItems.ToDictionary(h => h.ActionId);
+
             stateService.Subscribe(State.Loaded, OnGameLoaded);
             stateService.Subscribe(State.OnNewGameStart, OnNewGameStart);
             stateService.Subscribe(State.NotLoaded, OnGameNotLoaded);
